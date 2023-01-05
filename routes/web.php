@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\SobreNosController;
+use App\Http\Controllers\TesteController;
+use App\Http\Controllers\FornecedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,13 +33,16 @@ route::prefix('/app')->group(function () {
         return 'Clientes';
     })->name('app.clientes');
 
-    Route::get('/fornecedores', function () {
-        return 'Fornecedores';
-    })->name('app.fornecedores');
+    Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
 
     Route::get('/produto', function () {
         return 'Produto';
     })->name('app.produtos');
 });
 
+Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('site.teste');
+
+Route::fallback(function(){
+    echo 'Link da página acessada não existe. <a href="'.route('site.index').'">Clique Aqui<a/> para acessar a página principal';
+});
 
